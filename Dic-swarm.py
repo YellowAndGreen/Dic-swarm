@@ -39,5 +39,5 @@ def search():
         print(h2[0])
         if(i>=7):
             break
-search()
-m=input("nothing")
+while(1):
+    search()
