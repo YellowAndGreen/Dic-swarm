@@ -18,7 +18,30 @@ def searchtag(html):
 def searchre(html):
     refind=re.findall(r"<span class=\"text\">.*</span>",html)
     return refind
-
+def searchsynonym(html):
+    words=[]
+    refindn=re.search(r"n\.\s*[\u4e00-\u9fa5]*?；",html)
+    if refindn:
+        words.append(refindn.group(0))
+    else:
+        words.append("none")
+    refindvt=re.search(r"vt\.\s*[\u4e00-\u9fa5|，]*?；",html)
+    if refindvt:
+        words.append(refindvt.group(0))
+    else:
+        words.append("none")
+    refindvi=re.search(r"vi\.\s*[\u4e00-\u9fa5|，]*?；",html)
+    if refindvi:
+        words.append(refindvi.group(0))
+    else:
+        words.append("none")
+    refindadj=re.search(r"adj\.\s*[\u4e00-\u9fa5|，]*?；",html)
+    if refindadj:
+        words.append(refindadj.group(0))
+    else:
+        words.append("none")
+    return words
+  
 def formurlforsynonym(word):
     url="http://www.thesaurus.com/browse/"+word+"?s=t"
     return url
@@ -36,13 +59,16 @@ def search():
     words=searchre(html1)
     phrases=searchtag(html2)
     i=0
+    tplt = "{0:10}\t{1:15}\t{2:15}\t{3:15}\t{4:15}"
     print("Here are some synonyms !\n")
     for w in words:
         i=i+1
         h1=w.split(">")
         h2=h1[1].split("<")
-        print(h2[0])
-        if(i>=7):
+        htmlforsyn=getResponse(formurlforphrase(h2[0]))
+        wordss=searchsynonym(htmlforsyn)
+        print(tplt.format(h2[0],wordss[0],wordss[1],wordss[2],wordss[3]))
+        if(i>=12):
             break
     j=0
     print("\nHere are phrases !\n")
