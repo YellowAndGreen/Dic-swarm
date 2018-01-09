@@ -1,6 +1,5 @@
 # Dic-swarm
-###一月六日
-写下这篇文章的第一天，由于要期末复习，先说下规划。不盈词典是开源的，放在[github](https://github.com/YellowAndGreen/Dic-swarm)上了。由于是私人使用，所以直接用的爬虫。目前已经完成了同义词和词组的爬取。后期可能会和移动贩卖小组的人一起完成。![思路](http://upload-images.jianshu.io/upload_images/8887974-4e86c7c2d6f8e8cd.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![思路](http://upload-images.jianshu.io/upload_images/8887974-4e86c7c2d6f8e8cd.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
 #爬虫的的实现
 >首先，走的是用requests库进行网页抓取和用BeautifulSoup和re库进行处理。
