@@ -1,6 +1,15 @@
 import requests
-from bs4 import BeautifulSoup
 import re
+
+
+#全局变量
+inbox=[]
+word=""
+#短语inbox
+phinbox=[]
+temp=[]
+
+
 def getResponse(url):
     try:
         r=requests.get(url)
@@ -50,8 +59,26 @@ def formurlforphrase(word):
     url="http://dict.youdao.com/w/"+word+"/#keyfrom=dict2.top"
     return url
 
-def search():
-    word=input("please enter a word：")
+#这是一个判断是查字典还是制卡的函数
+def judge(word):
+    if word[0:6]=="output":
+        output()
+        return False
+    return True
+
+#一个输出为utf-8编码的txt文件
+def output():
+    global inbox #设置为全局变量
+    typpe="词汇-第四组|{}|{}"    #以|作为分隔符
+    
+    with open(r"C:\Users\60234\Desktop\qwe.txt","a",encoding="utf-8") as f:
+        f.write(typpe.format(word,inbox[0]))
+
+#搜索的函数
+def search(word):
+    #要先声明是全局变量
+    global inbox
+    global phinbox
     url1=formurlforsynonym(word)
     url2=formurlforphrase(word)
     html1=getResponse(url1)
@@ -81,10 +108,20 @@ def search():
         h1=n.split("wordgroup\">")
         h2=h1[1].split("</a>")
         print(h2[0])
+        phinbox.append(h2[0])
         if(j>=10):
+            inbox.append(phinbox)
+            phinbox=[]
             break
     print("\n")
-
     
+#主函数
+def anki():
+    global word
+    word=input("please enter a word | command or push something：")
+    if judge(word):
+        search(word)
+
 while(1):
-    search()
+    anki()
+    
